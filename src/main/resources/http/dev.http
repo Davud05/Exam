@@ -1,0 +1,114 @@
+### Variables
+@url = http://localhost:7070/api/v1
+
+### Test auth endpoint
+GET {{url}}/auth/test/
+
+### Login as user
+POST {{url}}/auth/login/
+Content-Type: application/json
+
+{
+    "username": "user",
+    "password": "test123"
+}
+
+> {%
+    client.global.set("jwt_token", response.body.token);
+    client.log("JWT Token: " + client.global.get("jwt_token"));
+%}
+
+### Register new user
+POST {{url}}/auth/register/
+Content-Type: application/json
+
+{
+    "username": "user",
+    "password": "test123"
+}
+
+### Add admin role to user
+POST {{url}}/auth/user/addrole/
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+    "role": "admin"
+}
+
+### Protected endpoints test
+GET {{url}}/protected/user_demo/
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+GET {{url}}/protected/admin_demo/
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+### ITEM ENDPOINTS ###
+
+### Get all items
+GET {{url}}/items
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+### Get item by id (including student details)
+GET {{url}}/items/3
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+### Create new item
+POST {{url}}/items
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+    "name": "New Camera",
+    "purchasePrice": 4999.99,
+    "category": "VIDEO",
+    "acquisitionDate": "2024-03-20",
+    "description": "High-end video camera"
+}
+
+### Update item
+PUT {{url}}/items/1
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+    "name": "Updated Camera",
+    "purchasePrice": 5999.99,
+    "category": "VIDEO",
+    "acquisitionDate": "2024-03-20",
+    "description": "Updated description"
+}
+
+### Delete item
+DELETE {{url}}/items/3
+Authorization: Bearer {{jwt_token}}
+
+### Assign item to student
+PUT {{url}}/items/1/students/1
+Authorization: Bearer {{jwt_token}}
+
+### Populate database
+POST {{url}}/items/populate
+Authorization: Bearer {{jwt_token}}
+
+### Get items by category
+GET {{url}}/items/category/VIDEO
+
+### Get student item totals
+GET {{url}}/items/student-totals
+
+### Get all shops
+GET {{url}}/items/shops
+
+### Get shops by category
+GET {{url}}/items/shops/video
+
+### Get item with shops
+GET http://localhost:7070/api/v1/items/3
+
+
+

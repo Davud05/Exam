@@ -1,0 +1,38 @@
+### Get all items
+GET http://localhost:7070/items
+
+### Get item by id (including student details)
+GET http://localhost:7070/items/1
+
+### Create new item
+POST http://localhost:7070/items
+Content-Type: application/json
+
+{
+  "name": "New Camera",
+  "purchasePrice": 4999.99,
+  "category": "VIDEO",
+  "acquisitionDate": "2024-03-20",
+  "description": "High-end video camera"
+}
+
+### Update item
+PUT http://localhost:7070/items/1
+Content-Type: application/json
+
+{
+  "name": "Updated Camera",
+  "purchasePrice": 5999.99,
+  "category": "VIDEO",
+  "acquisitionDate": "2024-03-20",
+  "description": "Updated description"
+}
+
+### Delete item
+DELETE http://localhost:7070/items/1
+
+### Assign item to student
+PUT http://localhost:7070/items/1/students/1
+
+### Populate database
+POST http://localhost:7070/items/populate 
